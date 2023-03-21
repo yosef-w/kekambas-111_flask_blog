@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template
 from fake_data import posts
+from app.forms import SignUpForm
 
 @app.route('/')
 def index():
@@ -9,7 +10,8 @@ def index():
 
 @app.route('/signup')
 def signup():
-    return render_template('signup.html')
+    form = SignUpForm()
+    return render_template('signup.html', form=form)
 
 
 @app.route('/login')
