@@ -6,8 +6,11 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/test')
-def hello_test():
-    name = 'Brian'
-    # name.append('A')
-    return 'This is a test!'
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
