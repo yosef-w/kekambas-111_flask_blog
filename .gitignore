@@ -12,3 +12,6 @@ __pycache__/
 
 # Hide the .env file because that is where we keep secrets, keys, etc.
 .env
+
+# Ignore the SQLite database (for development/testing use only)
+app.db
