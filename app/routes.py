@@ -81,3 +81,31 @@ def create_post():
         flash(f"{new_post.title} has been created!", "success")
         return redirect(url_for('index'))
     return render_template('create.html', form=form)
+
+
+@app.route('/edit/<post_id>', methods=["GET", "POST"])
+@login_required
+def edit_post(post_id):
+    form = PostForm()
+    post_to_edit = Post.query.get_or_404(post_id)
+    # Make sure that the post author is the current user
+    if post_to_edit.author != current_user:
+        flash("You do not have permission to edit this post", "danger")
+        return redirect(url_for('index'))
+
+    # If form submitted, update Post
+    if form.validate_on_submit():
+        # update the post with the form data
+        post_to_edit.title = form.title.data
+        post_to_edit.body = form.body.data
+        post_to_edit.image_url = form.image_url.data
+        # Commit that to the database
+        db.session.commit()
+        flash(f"{post_to_edit.title} has been edited!", "success")
+        return redirect(url_for('index'))
+
+    # Pre-populate the form with Post To Edit's values
+    form.title.data = post_to_edit.title
+    form.body.data = post_to_edit.body
+    form.image_url.data = post_to_edit.image_url
+    return render_template('edit.html', form=form, post=post_to_edit)
