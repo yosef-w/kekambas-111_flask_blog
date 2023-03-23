@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
 from fake_data import posts
-from app.forms import SignUpForm, LoginForm
+from app.forms import SignUpForm, LoginForm, PostForm
 from app.models import User
 from flask_login import login_user, logout_user
 
@@ -64,3 +64,9 @@ def logout():
     logout_user()
     flash("You have logged out", "info")
     return redirect(url_for('index'))
+
+
+@app.route('/create')
+def create_post():
+    form = PostForm()
+    return render_template('create.html', form=form)
