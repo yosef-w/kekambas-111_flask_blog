@@ -1,12 +1,13 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
-from fake_data import posts
+# from fake_data import posts
 from app.forms import SignUpForm, LoginForm, PostForm
 from app.models import User, Post
 from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
 def index():
+    posts = Post.query.all()
     return render_template('index.html', posts=posts)
 
 
